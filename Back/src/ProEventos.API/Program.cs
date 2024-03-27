@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ProEventos.API.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region String de Conexão
+builder.Services
+.AddDbContext<AppDbContext>(
+    context => context.UseSqlite(
+        builder.Configuration
+        .GetConnectionString("DefaultConnection")
+        )
+);
+#endregion
 
 var app = builder.Build();
 
