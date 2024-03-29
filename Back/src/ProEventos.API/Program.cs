@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 #region String de Conexão
 builder.Services
@@ -30,6 +31,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseCors(cors => cors.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin()
+);
+
 app.MapControllers();
 
 app.Run();
