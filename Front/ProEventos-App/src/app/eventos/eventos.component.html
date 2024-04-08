@@ -15,8 +15,12 @@
 <table class="table table-hover">
     <thead class="table-dark">
         <tr>
-            <th class="text-center" scope="col">#</th>
-            <th class="text-center" scope="col">Imagem</th>
+            <th scope="col">
+                <button class="btn btn-outline-light btn-sm" (click)="exibirImagem()">
+                    {{!mostrarImagem ? 'Ocultar Imagem' : 'Exibir Imagem'}}
+                </button>
+            </th>
+            <th scope="col">#</th>
             <th class="text-center" scope="col">Tema</th>
             <th class="text-center" scope="col">Local</th>
             <th class="text-center" scope="col">Data</th>
@@ -27,8 +31,14 @@
     </thead>
     <tbody *ngIf="eventos && eventos.length">
         <tr *ngFor="let item of eventos">
-            <th class="text-center" scope="row">{{item.eventoId}}</th>
-            <td class="text-center">{{item.imagemURL}}</td>
+            <td>
+                <img [collapse]="mostrarImagem" [isAnimated]="true"
+                src="/assets/{{item.imagemURL}}" alt="" 
+                [style.width.px]="larguraImagem" 
+                [style.margin.px]="margemImagem">
+            </td>
+
+            <th scope="row">{{item.eventoId}}</th>
             <td class="text-center">{{item.tema}}</td>
             <td class="text-center">{{item.local}}</td>
             <td class="text-center">{{item.dataEvento}}</td>
