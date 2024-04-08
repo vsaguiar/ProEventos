@@ -26,14 +26,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th class="text-center" scope="row">1</th>
-            <td class="text-center">A</td>
-            <td class="text-center">B</td>
-            <td class="text-center">C</td>
-            <td class="text-center">D</td>
-            <td class="text-center">E</td>
-            <td class="text-center">F</td>
+        <tr *ngFor="let item of eventos">
+            <th class="text-center" scope="row">{{item.eventoId}}</th>
+            <td class="text-center">{{item.imagemURL}}</td>
+            <td class="text-center">{{item.tema}}</td>
+            <td class="text-center">{{item.local}}</td>
+            <td class="text-center">{{item.dataEvento}}</td>
+            <td class="text-center">{{item.quantidadePessoas}}</td>
+            <td class="text-center">{{item.lote}}</td>
+            <td class="text-center"></td>
         </tr>
     </tbody>
 </table>
