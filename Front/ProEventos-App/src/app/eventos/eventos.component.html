@@ -1,16 +1,16 @@
 <h2>Eventos</h2>
 <hr>
 
-<form class="row row-cols-sm-auto mb-3" action="">
+<div class="row row-cols-sm-auto mb-3">
     <div>
         <div class="input-group mb-1">
-            <input type="text" class="form-control" placeholder="buscar" />
+            <input type="text" class="form-control" placeholder="buscar" [(ngModel)]="filtroLista"/>
         </div>
     </div>
     <div>
         <button type="submit" class="btn btn-outline-success">Buscar</button>
     </div>
-</form>
+</div>
 
 <table class="table table-hover">
     <thead class="table-dark">
@@ -30,7 +30,7 @@
         </tr>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
-        <tr *ngFor="let item of eventos">
+        <tr *ngFor="let item of eventosFiltrados">
             <td>
                 <img [collapse]="mostrarImagem" [isAnimated]="true"
                 src="/assets/{{item.imagemURL}}" alt="" 
