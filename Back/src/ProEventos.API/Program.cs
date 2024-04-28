@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProEventos.API.Context;
+using ProEventos.Persitence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Services.AddCors();
 
 #region String de Conexão
 builder.Services
-.AddDbContext<AppDbContext>(
+.AddDbContext<ProEventosContext>(
     context => context.UseSqlite(
         builder.Configuration
         .GetConnectionString("DefaultConnection")
