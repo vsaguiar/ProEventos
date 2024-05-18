@@ -67,18 +67,48 @@ public class EventoService : IEventoService
         }
     }
 
-    public Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
+    public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var eventos = await _eventoPersist.GetAllEventosAsync(includePalestrantes);
+            if (eventos is null) return null;
+
+            return eventos;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
-    public Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
+    public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var eventos = await _eventoPersist.GetAllEventosByTemaAsync(tema, includePalestrantes);
+            if (eventos is null) return null;
+
+            return eventos;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
-    public Task<Evento> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
+    public async Task<Evento> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var eventos = await _eventoPersist.GetEventoByIdAsync(eventoId, includePalestrantes);
+            if (eventos is null) return null;
+
+            return eventos;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }
