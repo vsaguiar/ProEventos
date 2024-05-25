@@ -15,7 +15,7 @@ public class PalestrantePersist : IPalestrantePersist
 
     public async Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos = false)
     {
-        IQueryable<Palestrante> query = _context.Palestrantes
+        IQueryable<Palestrante> query = _context.Palestrantes.AsNoTracking()
             .Include(p => p.RedesSociais);
 
         if (includeEventos)
@@ -32,7 +32,7 @@ public class PalestrantePersist : IPalestrantePersist
 
     public  async Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos)
     {
-        IQueryable<Palestrante> query = _context.Palestrantes
+        IQueryable<Palestrante> query = _context.Palestrantes.AsNoTracking()
             .Include(p => p.RedesSociais);
 
         if (includeEventos)
@@ -50,7 +50,7 @@ public class PalestrantePersist : IPalestrantePersist
 
     public async Task<Palestrante> GetPalestranteByIdAsync(int palestranteId, bool includeEventos)
     {
-        IQueryable<Palestrante> query = _context.Palestrantes
+        IQueryable<Palestrante> query = _context.Palestrantes.AsNoTracking()
             .Include(p => p.RedesSociais);
 
         if (includeEventos)
