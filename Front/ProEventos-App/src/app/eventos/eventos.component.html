@@ -15,6 +15,7 @@
         <tr>
             <th scope="col">
                 <button class="btn btn-outline-light btn-sm" (click)="exibirImagem()">
+                    <i class="{{!mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
                     {{!mostrarImagem ? 'Ocultar Imagem' : 'Exibir Imagem'}}
                 </button>
             </th>
@@ -36,15 +37,19 @@
                 [style.margin.px]="margemImagem">
             </td>
 
-            <th scope="row">{{item.eventoId}}</th>
+            <th scope="row">{{item.id}}</th>
             <td class="text-center">{{item.tema}}</td>
             <td class="text-center">{{item.local}}</td>
-            <td class="text-center">{{item.dataEvento}}</td>
+            <td class="text-center">{{item.dataEvento | DateFormartPipe}}</td>
             <td class="text-center">{{item.quantidadePessoas}}</td>
-            <td class="text-center">{{item.lote}}</td>
+            <td class="text-center">{{item.lotes[0].nome | uppercase}}</td>
             <td class="text-center">
-                <button type="button" class="btn btn-primary btn-sm me-2">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+                <button type="button" class="btn btn-primary btn-sm me-2" title="Editar">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" title="Excluir">
+                    <i class="fa fa-trash"></i>
+                </button>
             </td>
         </tr>
     </tbody>
