@@ -36,7 +36,7 @@
             </tr>
         </thead>
         <tbody *ngIf="eventos && eventos.length">
-            <tr *ngFor="let item of eventosFiltrados">
+            <tr *ngFor="let item of eventosFiltrados" (click)="detalheEvento(item.id)" style="cursor: pointer;">
                 <td class="d-none d-md-table-cell">
                     <img [collapse]="mostrarImagem" [isAnimated]="true" src="/assets/{{item.imagemURL}}" alt=""
                         [style.width.px]="larguraImagem" [style.margin.px]="margemImagem">
@@ -49,9 +49,6 @@
                 <td class="text-center d-none d-md-table-cell">{{item.quantidadePessoas}}</td>
                 <td class="text-center d-none d-md-table-cell">{{item.lotes[0].nome | uppercase}}</td>
                 <td class="text-center">
-                    <!-- <button type="button" class="btn btn-primary btn-sm m-1" title="Editar">
-                        <i class="fa fa-edit"></i>
-                    </button> -->
                     <button type="button" class="btn btn-danger btn-md" title="Excluir" (click)="openModal(template)">
                         <i class="fa fa-trash"></i>
                     </button>
