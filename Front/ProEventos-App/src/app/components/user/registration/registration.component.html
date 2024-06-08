@@ -8,8 +8,54 @@
 	</div>
 
 	<div class="col-md-6">
+		<form class="p-1">
+			<div class="pb-2 d-block d-md-none">
+				<h3 class="border-bottom">Cadastro de Usuário</h3>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 mb-3">
+					<label>Primeiro Nome</label>
+					<input type="text" class="form-control" placeholder="Insira o primeiro nome" />
+				</div>
+				<div class="col-sm-6 mb-3">
+					<label>Último Nome</label>
+					<input type="text" class="form-control" placeholder="Insira o último nome" />
+				</div>
+			</div>
+			<div class="mb-3">
+				<label for="">Email:</label>
+				<input class="form-control" type="text" placeholder="Insira o nome completo" />
+			</div>
+			<div class="mb-3">
+				<label for="">Usuario:</label>
+				<input class="form-control" type="text" placeholder="Insira o nome de usuário" />
+			</div>
+			<div class="row">
+				<div class="col-sm-6 mb-3">
+					<label for="">Senha:</label>
+					<input class="form-control" type="password" placeholder="Digite uma senha" />
+				</div>
+				<div class="col-sm-6 mb-3">
+					<label for="">Confirmar Senha:</label>
+					<input class="form-control" type="password" placeholder="Confirme a senha" />
+				</div>
+			</div>
+			<div class="row p-1 mb-3">
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="customCheck1">
+					<label class="custom-control-label ms-1">Eu concordo com os <a href="#">Termos de Uso</a>.</label>
+				</div>
+			</div>
+			<div class="row">
+				<button class="btn btn-md btn-success btn-block px-5">
+					Registar
+				</button>
 
-		<!--FORM VAI AQUI-->
-
+				<a class="btn btn-link btn-block mt-3" routerLink="/user/login">
+					Já sou Cadastrado
+				</a>
+			</div>
+		</form>
 	</div>
+
 </div>
