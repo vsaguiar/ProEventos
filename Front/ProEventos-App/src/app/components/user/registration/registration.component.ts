@@ -19,6 +19,12 @@ export class RegistrationComponent implements OnInit {
     this.validation();
   }
 
+  onSubmit(): void {
+    if (this.form.invalid) {
+      return;
+    }
+  }
+
   private validation(): void {
     const formOptions: AbstractControlOptions = {
       validators: ValidatorField.MustMatch('senha', 'confirmarSenha')

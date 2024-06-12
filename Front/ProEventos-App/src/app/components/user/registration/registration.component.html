@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="col-md-6">
-		<form [formGroup]="form" class="p-1">
+		<form class="p-1" [formGroup]="form" (ngSubmit)="onSubmit()">
 			<div class="pb-2 d-block d-md-none">
 				<h3 class="border-bottom">Cadastro de Usuário</h3>
 			</div>
