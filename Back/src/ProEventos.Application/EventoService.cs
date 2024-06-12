@@ -1,4 +1,6 @@
+using AutoMapper;
 using ProEventos.Application.Contratos;
+using ProEventos.Application.DTOs;
 using ProEventos.Domain;
 using ProEventos.Persistence.Contratos;
 
@@ -8,19 +10,27 @@ public class EventoService : IEventoService
 {
     private readonly IGeralPersist _geralPersist;
     private readonly IEventoPersist _eventoPersist;
-    public EventoService(IGeralPersist geralPersist, IEventoPersist eventoPersist)
+    private readonly IMapper _mapper;
+    public EventoService(IGeralPersist geralPersist, IEventoPersist eventoPersist, IMapper mapper)
     {
         _geralPersist = geralPersist;
         _eventoPersist = eventoPersist;
+        _mapper = mapper;
     }
 
-    public async Task<Evento> AddEvento(Evento model)
+    public async Task<EventoDTO> AddEvento(EventoDTO model)
     {
         try
         {
-            _geralPersist.Add<Evento>(model);
+            var evento = _mapper.Map<Evento>(model);
+
+            _geralPersist.Add<Evento>(evento);
+
             if (await _geralPersist.SaveChangesAsync())
-                return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+            {
+                var eventoRetorno = await _eventoPersist.GetEventoByIdAsync(evento.Id, false);
+                return _mapper.Map<EventoDTO>(eventoRetorno);
+            }
 
             return null;
         }
@@ -30,7 +40,7 @@ public class EventoService : IEventoService
         }
     }
 
-    public async Task<Evento> UpdateEvento(int eventoId, Evento model)
+    public async Task<EventoDTO> UpdateEvento(int eventoId, EventoDTO model)
     {
         try
         {
@@ -39,9 +49,15 @@ public class EventoService : IEventoService
 
             model.Id = eventoId;
 
-            _geralPersist.Update(model);
+            _mapper.Map(model, evento);
+
+            _geralPersist.Update<Evento>(evento);
+
             if (await _geralPersist.SaveChangesAsync())
-                return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+            {
+                var eventoRetorno = await _eventoPersist.GetEventoByIdAsync(evento.Id, false);
+                return _mapper.Map<EventoDTO>(eventoRetorno);
+            }
 
             return null;
         }
@@ -67,14 +83,16 @@ public class EventoService : IEventoService
         }
     }
 
-    public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
+    public async Task<EventoDTO[]> GetAllEventosAsync(bool includePalestrantes = false)
     {
         try
         {
             var eventos = await _eventoPersist.GetAllEventosAsync(includePalestrantes);
             if (eventos is null) return null;
 
-            return eventos;
+            var result = _mapper.Map<EventoDTO[]>(eventos);
+
+            return result;
         }
         catch (Exception ex)
         {
@@ -82,14 +100,16 @@ public class EventoService : IEventoService
         }
     }
 
-    public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
+    public async Task<EventoDTO[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
     {
         try
         {
             var eventos = await _eventoPersist.GetAllEventosByTemaAsync(tema, includePalestrantes);
             if (eventos is null) return null;
 
-            return eventos;
+            var result = _mapper.Map<EventoDTO[]>(eventos);
+
+            return result;
         }
         catch (Exception ex)
         {
@@ -97,14 +117,16 @@ public class EventoService : IEventoService
         }
     }
 
-    public async Task<Evento> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
+    public async Task<EventoDTO> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
     {
         try
         {
-            var eventos = await _eventoPersist.GetEventoByIdAsync(eventoId, includePalestrantes);
-            if (eventos is null) return null;
+            var evento = await _eventoPersist.GetEventoByIdAsync(eventoId, includePalestrantes);
+            if (evento is null) return null;
 
-            return eventos;
+            var result = _mapper.Map<EventoDTO>(evento);
+
+            return result;
         }
         catch (Exception ex)
         {
