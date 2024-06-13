@@ -47,7 +47,7 @@
                 <td class="text-center d-none d-md-table-cell">{{item.local}}</td>
                 <td class="text-center">{{item.dataEvento | DateFormartPipe}}</td>
                 <td class="text-center d-none d-md-table-cell">{{item.quantidadePessoas}}</td>
-                <td class="text-center d-none d-md-table-cell">{{item.lotes[0].nome | uppercase}}</td>
+                <td class="text-center d-none d-md-table-cell">{{item.lotes[0]?.nome | uppercase}}</td>
                 <td class="text-center">
                     <button type="button" class="btn btn-danger btn-md" title="Excluir" (click)="openModal(template)">
                         <i class="fa fa-trash"></i>
