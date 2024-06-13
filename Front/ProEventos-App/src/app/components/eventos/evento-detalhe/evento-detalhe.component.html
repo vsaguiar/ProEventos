@@ -33,6 +33,7 @@
                     <label>Data e Hora</label>
                     <input type="datetime" class="form-control" 
                         [ngClass]="cssValidator(f.dataEvento)"
+                        value="{{evento.dataEvento | DateFormartPipe}}"
                         bsDatepicker 
                         [bsConfig]="bsConfig()" 
                         formControlName="dataEvento" placeholder="">
