@@ -18,6 +18,7 @@ export class EventoDetalheComponent implements OnInit {
 
   evento = {} as Evento;
   form!: FormGroup;
+  estadoSalvar = 'post';
 
   get f(): any {
     return this.form.controls;
@@ -47,6 +48,9 @@ export class EventoDetalheComponent implements OnInit {
 
     if (eventoIdParam != null) {
       this.spinner.show();
+
+      this.estadoSalvar = 'put';
+
       this.eventoServce.getEventoById(+eventoIdParam).subscribe(
         (evento: Evento) => {
           this.evento = { ...evento };
@@ -81,6 +85,8 @@ export class EventoDetalheComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.invalid) {
+      this.toastr.error('Dados inválidos.', 'Erro');
+      this.spinner.hide();
       return;
     }
   }
@@ -92,6 +98,36 @@ export class EventoDetalheComponent implements OnInit {
 
   public cssValidator(campoForm: FormControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched }
+  }
+
+  public salvarAlteracao(): void {
+    this.spinner.show();
+
+    if (this.form.valid) {
+      if (this.estadoSalvar == 'post') {
+        this.evento = { ...this.form.value };
+        this.eventoServce.postEvento(this.evento).subscribe(
+          () => this.toastr.success('Inclusão realizada com sucesso!', 'Sucesso'),
+          (error: any) => {
+            console.error(error);
+            this.spinner.hide();
+            this.toastr.error('Não foi possível incluir o evento', 'Erro');
+          },
+          () => this.spinner.hide(),
+        );
+      } else {
+        this.evento = { id: this.evento.id, ...this.form.value };
+        this.eventoServce.putEvento(this.evento.id, this.evento).subscribe(
+          () => this.toastr.success('Alteração realizada com sucesso!', 'Sucesso'),
+          (error: any) => {
+            console.error(error);
+            this.spinner.hide();
+            this.toastr.error('Não foi possível alterar o evento', 'Erro');
+          },
+          () => this.spinner.hide(),
+        );
+      }
+    }
   }
 
 }

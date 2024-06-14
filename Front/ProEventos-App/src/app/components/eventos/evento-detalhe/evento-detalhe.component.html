@@ -92,7 +92,7 @@
                 <button class="btn btn-outline-secondary me-auto border" (click)="resetForm($event)">
                     Cancelar Alteração
                 </button>
-                <button class="btn btn-success ms-1" [disabled]="!form.valid">
+                <button class="btn btn-success ms-1" [disabled]="!form.valid" (click)="salvarAlteracao()">
                     <!-- <span class="spinner-border spinner-border-sm me-1"></span> -->
                     Salvar Evento
                 </button>
