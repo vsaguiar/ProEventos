@@ -81,7 +81,7 @@ public class EventosController : ControllerBase
         }
     }
 
-    
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, EventoDTO model)
     {
@@ -105,7 +105,7 @@ public class EventosController : ControllerBase
         try
         {
             if (await _eventoService.DeleteEvento(id))
-                return Ok("Deletado.");
+                return Ok(new { message = "Deletado" });
             else
                 return BadRequest("Evento não deletado.");
         }
