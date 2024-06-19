@@ -50,7 +50,7 @@ public class LoteService : ILoteService
                     var lote = lotes.FirstOrDefault(lote => lote.Id == model.Id);
                     model.EventoId = eventoId;
 
-                    _mapper.Map(model, eventoId);
+                    _mapper.Map(model, lote);
 
                     _geralPersist.Update<Lote>(lote);
 
