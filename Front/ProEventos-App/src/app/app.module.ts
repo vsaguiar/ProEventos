@@ -31,6 +31,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
 
 import { DateTimeFormartPipe } from './helpers/DateTimeFormart.pipe';
 
@@ -74,7 +75,8 @@ defineLocale('pt-br', ptBrLocale);
     NgxSpinnerModule
   ],
   providers: [
-    EventoService
+    EventoService,
+    LoteService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

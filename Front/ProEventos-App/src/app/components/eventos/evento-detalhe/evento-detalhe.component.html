@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <label>Tema</label>
-                    <input type="text" class="form-control" [ngClass]="cssValidator(f.tema)"
-                        formControlName="tema" placeholder="Insira o Tema">
+                    <input type="text" class="form-control" [ngClass]="cssValidator(f.tema)" formControlName="tema"
+                        placeholder="Insira o Tema">
                     <div *ngIf="f.tema.errors?.required" class="invalid-feedback">
                         Tema é obrigatório.
                     </div>
@@ -22,20 +22,16 @@
             <div class="row">
                 <div class="col-md-8">
                     <label>Local</label>
-                    <input type="text" class="form-control"
-                        [ngClass]="cssValidator(f.local)" 
-                        formControlName="local" placeholder="">
+                    <input type="text" class="form-control" [ngClass]="cssValidator(f.local)" formControlName="local"
+                        placeholder="">
                     <div *ngIf="f.local.errors?.required && f.local.touched" class="invalid-feedback">
                         Local é obrigatório.
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label>Data e Hora</label>
-                    <input type="datetime" class="form-control" 
-                        [ngClass]="cssValidator(f.dataEvento)"
-                        value="{{evento.dataEvento | DateFormartPipe}}"
-                        bsDatepicker 
-                        [bsConfig]="bsConfig()" 
+                    <input type="datetime" class="form-control" [ngClass]="cssValidator(f.dataEvento)"
+                        value="{{evento.dataEvento | DateFormartPipe}}" bsDatepicker [bsConfig]="bsConfig()"
                         formControlName="dataEvento" placeholder="">
                     <div *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="invalid-feedback">
                         Data e Hora são obrigatórias.
@@ -45,30 +41,29 @@
             <div class="row">
                 <div class="col-md-2">
                     <label>Quantidade Pessoas</label>
-                    <input type="number" class="form-control"
-                    [ngClass]="cssValidator(f.quantidadePessoas)"
-                    formControlName="quantidadePessoas" placeholder="">
-                    <div *ngIf="f.quantidadePessoas.errors?.required && f.quantidadePessoas.touched" class="invalid-feedback">
+                    <input type="number" class="form-control" [ngClass]="cssValidator(f.quantidadePessoas)"
+                        formControlName="quantidadePessoas" placeholder="">
+                    <div *ngIf="f.quantidadePessoas.errors?.required && f.quantidadePessoas.touched"
+                        class="invalid-feedback">
                         Quantidade Pessoas é obrigatório.
                     </div>
-                    <div *ngIf="f.quantidadePessoas.errors?.max && f.quantidadePessoas.touched" class="invalid-feedback">
+                    <div *ngIf="f.quantidadePessoas.errors?.max && f.quantidadePessoas.touched"
+                        class="invalid-feedback">
                         O máximo é 120000.
                     </div>
                 </div>
                 <div class="col-md-2">
                     <label>Telefone</label>
-                    <input type="text" class="form-control"
-                    [ngClass]="cssValidator(f.telefone)"
-                    formControlName="telefone" placeholder="(000) 90000-0000">
+                    <input type="text" class="form-control" [ngClass]="cssValidator(f.telefone)"
+                        formControlName="telefone" placeholder="(000) 90000-0000">
                     <div *ngIf="f.telefone.errors?.required && f.telefone.touched" class="invalid-feedback">
                         Telefone é obrigatório.
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label>E-mail</label>
-                    <input type="text" class="form-control"
-                    [ngClass]="cssValidator(f.email)"
-                    formControlName="email" placeholder="e-mail">
+                    <input type="text" class="form-control" [ngClass]="cssValidator(f.email)" formControlName="email"
+                        placeholder="e-mail">
                     <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
                         E-mail é obrigatório.
                     </div>
@@ -78,9 +73,8 @@
                 </div>
                 <div class="col-md-4">
                     <label>Imagem</label>
-                    <input type="text" class="form-control"
-                    [ngClass]="cssValidator(f.imagemURL)"
-                    formControlName="imagemURL" placeholder="imagem">
+                    <input type="text" class="form-control" [ngClass]="cssValidator(f.imagemURL)"
+                        formControlName="imagemURL" placeholder="imagem">
                     <div *ngIf="f.imagemURL.errors?.required && f.imagemURL.touched" class="invalid-feedback">
                         Imagem é obrigatório.
                     </div>
@@ -99,4 +93,72 @@
             </div>
         </div>
     </form>
+</div>
+
+<div class="card rounded shadow-sm mt-4">
+    <div class="p-3">
+        <div class="d-flex border-bottom">
+            <h2 class="me-auto">
+                Lotes do Evento
+            </h2>
+            <h2>
+                <i class="fas fa-money-bill-wave"></i>
+            </h2>
+        </div>
+        <p>Clique em Lote para adicionar e preencher novos Lotes</p>
+        <div class="row p-1">
+            <div class="col">
+                <div>
+                    <fieldset class="form-group">
+                        <legend class="d-flex justify-content-between capitalize">
+                            <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex" tooltip="Excluir Lote"
+                                [adaptivePosition]="false" [delay]="500" placement="left">
+                                <i class="fa fa-window-close my-1"></i>
+                                <b class="ms-1">Excluir</b>
+                            </button>
+                        </legend>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" formControlName="nome" placeholder="Lote">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Quantidade</label>
+                                <input type="text" class="form-control" formControlName="quantidade" placeholder="000">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Preço</label>
+                                <input type="text" currencyMask class="form-control" formControlName="preco"
+                                    placeholder="R$ 0,00">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Data Início</label>
+                                <input type="text" class="form-control" formControlName="dataInicio"
+                                    placeholder="01/01/2019">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Data Fim</label>
+                                <input type="text" class="form-control" formControlName="dataFim"
+                                    placeholder="01/01/2019">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <button class="d-flex btn btn-outline-primary">
+            <i class="fa fa-plus-circle my-1"></i>
+            <b class="ms-1">Lote</b>
+        </button>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex">
+            <button class="btn btn-outline-secondary me-auto border">
+                Cancelar Alteração
+            </button>
+            <button class="btn btn-success ms-1">
+                Salvar Lotes
+            </button>
+        </div>
+    </div>
 </div>
