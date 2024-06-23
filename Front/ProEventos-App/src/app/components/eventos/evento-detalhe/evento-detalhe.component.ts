@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { EventoService } from '@app/services/evento.service';
 import { Evento } from '@app/models/Evento';
@@ -20,6 +20,10 @@ export class EventoDetalheComponent implements OnInit {
   evento = {} as Evento;
   form!: FormGroup;
   estadoSalvar = 'post';
+
+  get modoEditar(): boolean {
+    return this.estadoSalvar == 'put';
+  }
 
   get lotes(): FormArray {
     return this.form.get('lotes') as FormArray;
@@ -41,15 +45,16 @@ export class EventoDetalheComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private localeService: BsLocaleService,
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private eventoService: EventoService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
     this.localeService.use('pt-br');
   }
 
   public carregarEvento(): void {
-    const eventoIdParam = this.router.snapshot.paramMap.get('id');
+    const eventoIdParam = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (eventoIdParam != null) {
       this.spinner.show();
@@ -117,7 +122,7 @@ export class EventoDetalheComponent implements OnInit {
     this.form.reset();
   }
 
-  public cssValidator(campoForm: FormControl): any {
+  public cssValidator(campoForm: FormControl | AbstractControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched }
   }
 
@@ -130,7 +135,10 @@ export class EventoDetalheComponent implements OnInit {
         : { id: this.evento.id, ...this.form.value };
 
       this.eventoService[this.estadoSalvar](this.evento).subscribe(
-        () => this.toastr.success('Evento salvo com sucesso!', 'Sucesso'),
+        (eventoRetorno: Evento) => {
+          this.toastr.success('Evento salvo com sucesso!', 'Sucesso');
+          this.router.navigate([`eventos/detalhe/${eventoRetorno.id}`]);
+        },
         (error: any) => {
           console.error(error);
           this.spinner.hide();
