@@ -62,7 +62,7 @@ export class EventoDetalheComponent implements OnInit {
   public carregarEvento(): void {
     this.eventoId = +this.activatedRoute.snapshot.paramMap.get('id');
 
-    if (this.eventoId != null || this.eventoId == 0) {
+    if (this.eventoId != null && this.eventoId != 0) {
       this.spinner.show();
 
       this.estadoSalvar = 'put';
@@ -116,6 +116,10 @@ export class EventoDetalheComponent implements OnInit {
     });
   }
 
+  public mudarValorData(value: Date, indice: number, campo: string): void {
+    this.lotes.value[indice][campo] = value;
+  }
+
   onSubmit(): void {
     if (this.form.invalid) {
       this.toastr.error('Dados inválidos.', 'Erro');
@@ -134,9 +138,8 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public salvarEvento(): void {
-    this.spinner.show();
-
     if (this.form.valid) {
+      this.spinner.show();
       this.evento = (this.estadoSalvar == 'post')
         ? { ...this.form.value }
         : { id: this.evento.id, ...this.form.value };
@@ -157,8 +160,8 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public salvarLote(): void {
-    this.spinner.show();
     if (this.form.controls.lotes.valid) {
+      this.spinner.show();
       this.loteService.SaveLote(this.eventoId, this.form.value.lotes).subscribe(
         () => {
           this.toastr.success('Lote(s) salvo(s) com sucesso!', 'Sucesso');

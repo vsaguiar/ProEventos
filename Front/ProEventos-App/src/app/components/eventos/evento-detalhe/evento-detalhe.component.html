@@ -87,7 +87,6 @@
                     Cancelar Alteração
                 </button>
                 <button class="btn btn-success ms-1" [disabled]="!form.valid" (click)="salvarEvento()">
-                    <!-- <span class="spinner-border spinner-border-sm me-1"></span> -->
                     Salvar Evento
                 </button>
             </div>
@@ -136,12 +135,18 @@
                             <div class="form-group col-md-4">
                                 <label>Data Início</label>
                                 <input type="text" class="form-control" formControlName="dataInicio"
-                                    placeholder="01/01/2019">
+                                    placeholder="01/01/2024"
+                                    value="{{lotes.get(i+'.dataInicio').value | date:'dd/MM/yyyy'}}"
+                                    bsDatepicker
+                                    (bsValueChange)="mudarValorData($event, i, 'dataInicio')">
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Data Fim</label>
                                 <input type="text" class="form-control" formControlName="dataFim"
-                                    placeholder="01/01/2019">
+                                    placeholder="01/01/2024"
+                                    bsDatepicker
+                                    value="{{lotes.get(i+'.dataFim').value | date:'dd/MM/yyyy'}}"
+                                    (bsValueChange)="mudarValorData($event, i, 'dataFim')">
                             </div>
                         </div>
                     </fieldset>
@@ -158,7 +163,7 @@
             <button class="btn btn-outline-secondary me-auto border">
                 Cancelar Alteração
             </button>
-            <button class="btn btn-success ms-1" (click)="salvarLote()">
+            <button class="btn btn-success ms-1" [disabled]="!form.controls.lotes.valid" (click)="salvarLote()">
                 Salvar Lotes
             </button>
         </div>
