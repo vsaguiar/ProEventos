@@ -534,3 +534,5 @@ Thumbs.db
 # Banco de Dados
 *.db-shm
 *.db-wal
+
+Resources/
