@@ -87,7 +87,7 @@ public class EventosController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar incluir um evento. Erro: {ex.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar a imagem. Erro: {ex.Message}");
         }
     }
 
@@ -131,10 +131,16 @@ public class EventosController : ControllerBase
     {
         try
         {
+            var evento = await _eventoService.GetEventoByIdAsync(id, true);
+            if (evento is null) return NoContent();
+
             if (await _eventoService.DeleteEvento(id))
+            {
+                DeleteImage(evento.ImagemURL);
                 return Ok(new { message = "Deletado" });
+            }
             else
-                return BadRequest("Evento não deletado.");
+                throw new Exception("Ocorreu um erro ao tentar deletar o evento.");
         }
         catch (Exception ex)
         {
