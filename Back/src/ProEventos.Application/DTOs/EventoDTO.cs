@@ -28,6 +28,9 @@ public class EventoDTO
     [Display(Name = "e-mail")]
     [EmailAddress(ErrorMessage = "Endereço de e-mail inválido.")]
     public string Email { get; set; }
+
+    public int UserId { get; set; }
+    public UserDTO UserDTO { get; set; }
     
     public IEnumerable<LoteDTO> Lotes { get; set; }
     public IEnumerable<RedeSocialDTO> RedesSociais { get; set; }

@@ -1,19 +1,24 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Extensions;
 using ProEventos.Application.Contratos;
 using ProEventos.Application.DTOs;
 
 namespace ProEventos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class EventosController : ControllerBase
 {
     private readonly IEventoService _eventoService;
     private readonly IWebHostEnvironment _environment;
-    public EventosController(IEventoService eventoService, IWebHostEnvironment environment)
+    private readonly IAccountService _accountService;
+    public EventosController(IEventoService eventoService, IWebHostEnvironment environment, IAccountService accountService)
     {
         _eventoService = eventoService;
         _environment = environment;
+        _accountService = accountService;
     }
 
     [HttpGet]
@@ -21,8 +26,8 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var eventos = await _eventoService.GetAllEventosAsync(true);
-            if (eventos is null) return NoContent();
+            var eventos = await _eventoService.GetAllEventosAsync(User.GetUserIdExtensios(), true);
+            if (eventos == null) return NoContent();
 
             return Ok(eventos);
         }
@@ -38,7 +43,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(id);
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserIdExtensios(), id, true);
             if (evento is null) return NoContent();
 
             return Ok(evento);
@@ -55,7 +60,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetAllEventosByTemaAsync(tema);
+            var evento = await _eventoService.GetAllEventosByTemaAsync(User.GetUserIdExtensios(), tema, true);
             if (evento is null) return NoContent();
 
             return Ok(evento);
@@ -72,7 +77,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(eventoId, true);
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserIdExtensios(), eventoId, true);
             if (evento is null) return NoContent();
 
             var file = Request.Form.Files[0];
@@ -81,7 +86,7 @@ public class EventosController : ControllerBase
                 DeleteImage(evento.ImagemURL);
                 evento.ImagemURL = await SaveImage(file);
             }
-            var eventoRetorno = await _eventoService.UpdateEvento(eventoId, evento);
+            var eventoRetorno = await _eventoService.UpdateEvento(User.GetUserIdExtensios(), eventoId, evento);
 
             return Ok(eventoRetorno);
         }
@@ -97,7 +102,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.AddEvento(model);
+            var evento = await _eventoService.AddEvento(User.GetUserIdExtensios(), model);
             if (evento is null) return NoContent();
 
             return Ok(evento);
@@ -114,7 +119,7 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.UpdateEvento(id, model);
+            var evento = await _eventoService.UpdateEvento(User.GetUserIdExtensios(), id, model);
             if (evento is null) return NoContent();
 
             return Ok(evento);
@@ -131,10 +136,10 @@ public class EventosController : ControllerBase
     {
         try
         {
-            var evento = await _eventoService.GetEventoByIdAsync(id, true);
+            var evento = await _eventoService.GetEventoByIdAsync(User.GetUserIdExtensios(), id, true);
             if (evento is null) return NoContent();
 
-            if (await _eventoService.DeleteEvento(id))
+            if (await _eventoService.DeleteEvento(User.GetUserIdExtensios(), id))
             {
                 DeleteImage(evento.ImagemURL);
                 return Ok(new { message = "Deletado" });
