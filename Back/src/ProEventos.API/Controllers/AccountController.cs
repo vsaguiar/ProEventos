@@ -45,12 +45,12 @@ public class AccountController : ControllerBase
     {
         try
         {
-            if (await _accountService.UserExistsAsync(userDTO.UserName)) 
+            if (await _accountService.UserExistsAsync(userDTO.UserName))
                 return BadRequest("Usuário já existe.");
 
             var user = await _accountService.CreateAccountAsync(userDTO);
             if (user is not null) return Ok(user);
-            
+
             return BadRequest("Usuário não criado! Tente novamente mais tarde.");
         }
         catch (Exception ex)
@@ -73,7 +73,8 @@ public class AccountController : ControllerBase
             var result = await _accountService.CheckUserPasswordAsync(user, userLoginDTO.Password);
             if (!result.Succeeded) return Unauthorized();
 
-            return Ok( new {
+            return Ok(new
+            {
                 userName = user.UserName,
                 PrimeiroNome = user.PrimeiroNome,
                 token = _tokenService.CreateTokenAsync(user).Result
@@ -82,7 +83,29 @@ public class AccountController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Erro ao tentar retornar usuário. Erro: {ex.Message}");
+                $"Erro ao tentar realizar login. Erro: {ex.Message}");
         }
     }
+
+
+    [HttpPut("UpdateUser")]
+    public async Task<IActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
+    {
+        try
+        {
+            var user = await _accountService.GetUserByUserNameAsync(User.GetUserNameExtensios());
+            if (user is null) return Unauthorized("Usuário inválido.");
+
+            var userReturn = await _accountService.UpdateAccountAsync(userUpdateDTO);
+            if (userReturn is null) return NoContent();
+
+            return Ok(userReturn);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
+        }
+    }
+
 }
