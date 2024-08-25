@@ -53,7 +53,33 @@ public class AccountController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+                $"Erro ao tentar registrar um novo usuário. Erro: {ex.Message}");
+        }
+    }
+
+
+    [HttpPost("Login")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(UserLoginDTO userLoginDTO)
+    {
+        try
+        {
+            var user = await _accountService.GetUserByUserNameAsync(userLoginDTO.Username);
+            if (user is null) return Unauthorized("Usuário ou Senha inválidos.");
+
+            var result = await _accountService.CheckUserPasswordAsync(user, userLoginDTO.Password);
+            if (!result.Succeeded) return Unauthorized();
+
+            return Ok( new {
+                userName = user.UserName,
+                PrimeiroNome = user.PrimeiroNome,
+                token = _tokenService.CreateTokenAsync(user).Result
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Erro ao tentar retornar usuário. Erro: {ex.Message}");
         }
     }
 }
