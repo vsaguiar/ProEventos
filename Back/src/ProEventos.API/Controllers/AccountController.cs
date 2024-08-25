@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProEventos.API.Extensions;
 using ProEventos.Application.Contratos;
 using ProEventos.Application.DTOs;
 
@@ -20,11 +21,13 @@ public class AccountController : ControllerBase
     }
 
 
-    [HttpGet("GetUser/{userName}")]
-    public async Task<IActionResult> GetUser(string userName)
+    [HttpGet("GetUser")]
+    public async Task<IActionResult> GetUser()
     {
         try
         {
+            var userName = User.GetUserNameExtensios();
+
             var user = await _accountService.GetUserByUserNameAsync(userName);
             return Ok(user);
         }
