@@ -49,7 +49,13 @@ public class AccountController : ControllerBase
                 return BadRequest("Usuário já existe.");
 
             var user = await _accountService.CreateAccountAsync(userDTO);
-            if (user is not null) return Ok(user);
+            if (user is not null)
+                return Ok(new
+                {
+                    userName = user.UserName,
+                    PrimeiroNome = user.PrimeiroNome,
+                    token = _tokenService.CreateTokenAsync(user).Result
+                });
 
             return BadRequest("Usuário não criado! Tente novamente mais tarde.");
         }
