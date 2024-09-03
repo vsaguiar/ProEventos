@@ -37,6 +37,7 @@ import { LoteService } from './services/lote.service';
 import { DateTimeFormartPipe } from './helpers/DateTimeFormart.pipe';
 import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { HomeComponent } from './components/home/home.component';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -54,6 +55,7 @@ defineLocale('pt-br', ptBrLocale);
     EventoDetalheComponent,
     EventoListaComponent,
     UserComponent,
+    HomeComponent,
     LoginComponent,
     RegistrationComponent
   ],
