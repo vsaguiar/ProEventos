@@ -140,24 +140,24 @@
                     <div class="col-sm">
                         <label>Senha</label>
                         <input type="password" class="form-control"
-                        [ngClass]="{'is-invalid': f.senha.errors && f.senha.touched}"
-                        formControlName="senha" />
-                        <div *ngIf="f.senha.errors?.required && f.senha.touched" class="invalid-feedback">
+                        [ngClass]="{'is-invalid': f.password.errors && f.password.touched}"
+                        formControlName="password" />
+                        <div *ngIf="f.password.errors?.required && f.password.touched" class="invalid-feedback">
                             Senha é obrigatório.
                         </div>
-                        <div *ngIf="f.senha.errors?.minlength && f.senha.touched" class="invalid-feedback">
+                        <div *ngIf="f.password.errors?.minlength && f.password.touched" class="invalid-feedback">
                             Mínimo de 6 caracteres.
                         </div>
                     </div>
                     <div class="col-sm">
                         <label>Confirmar Senha</label>
                         <input type="password" class="form-control"
-                        [ngClass]="{'is-invalid': f.confirmarSenha.errors && f.confirmarSenha.touched}"
-                        formControlName="confirmarSenha" />
-                        <div *ngIf="f.confirmarSenha.errors?.required && f.confirmarSenha.touched" class="invalid-feedback">
+                        [ngClass]="{'is-invalid': f.confirmarPassword.errors && f.confirmarPassword.touched}"
+                        formControlName="confirmarPassword" />
+                        <div *ngIf="f.confirmarPassword.errors?.required && f.confirmarPassword.touched" class="invalid-feedback">
                             Confirmar Senha é obrigatório.
                         </div>
-                        <div *ngIf="f.confirmarSenha.errors?.mustMatch" class="invalid-feedback">
+                        <div *ngIf="f.confirmarPassword.errors?.mustMatch" class="invalid-feedback">
                             Senhas não são iguais.
                         </div>
                     </div>
