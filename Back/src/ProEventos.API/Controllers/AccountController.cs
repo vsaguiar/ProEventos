@@ -99,13 +99,20 @@ public class AccountController : ControllerBase
     {
         try
         {
+            if (userUpdateDTO.UserName != User.GetUserNameExtensios()) return Unauthorized("Usuário Inválido");
+
             var user = await _accountService.GetUserByUserNameAsync(User.GetUserNameExtensios());
             if (user is null) return Unauthorized("Usuário inválido.");
 
             var userReturn = await _accountService.UpdateAccountAsync(userUpdateDTO);
             if (userReturn is null) return NoContent();
 
-            return Ok(userReturn);
+            return Ok(new
+            {
+                userName = userReturn.UserName,
+                PrimeiroNome = userReturn.PrimeiroNome,
+                token = _tokenService.CreateTokenAsync(userReturn).Result
+            });
         }
         catch (Exception ex)
         {
