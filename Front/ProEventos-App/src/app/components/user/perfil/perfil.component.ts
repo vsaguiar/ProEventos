@@ -36,12 +36,14 @@ export class PerfilComponent implements OnInit {
 
   private carregarUsuario(): void {
     this.spinner.show();
-    this.accountService.getUser().subscribe(
+    this.accountService
+        .getUser()
+        .subscribe(
       (userRetorno: UserUpdate) => {
         console.log(userRetorno);
         this.userUpdate = userRetorno;
         this.form.patchValue(this.userUpdate);
-        this.toaster.success('Usuário carregado!', 'Sucesso');
+        // this.toaster.success('Usuário carregado!', 'Sucesso');
       },
       (error) => {
         console.error(error);
@@ -52,9 +54,22 @@ export class PerfilComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
-      return;
-    }
+    this.atualizarUsuario();
+  }
+
+  public atualizarUsuario() {
+    this.userUpdate = { ...this.form.value};
+    this.spinner.show();
+
+    this.accountService
+        .updateUser(this.userUpdate)
+        .subscribe(
+      () => this.toaster.success('Usuário atualizado!', 'Sucesso'),
+      (error) => {
+        this.toaster.error(error.error);
+        console.error(error);
+      }
+    ).add(() => this.spinner.hide());
   }
 
   public resetForm(event: any): void {
@@ -68,15 +83,16 @@ export class PerfilComponent implements OnInit {
     };
 
     this.form = this.fb.group({
-      titulo: ['', Validators.required],
+      userName: [''],
+      titulo: ['NaoInformado', Validators.required],
       primeiroNome: ['', Validators.required],
       ultimoNome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone: ['', Validators.required],
-      funcao: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      funcao: ['NaoInformado', Validators.required],
       descricao: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      confirmarPassword: ['', Validators.required],
+      password: ['', [Validators.minLength(4), Validators.nullValidator]],
+      confirmarPassword: ['', Validators.nullValidator],
     }, formOptions);
   }
 
