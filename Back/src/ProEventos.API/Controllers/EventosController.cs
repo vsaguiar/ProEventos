@@ -30,6 +30,8 @@ public class EventosController : ControllerBase
             var eventos = await _eventoService.GetAllEventosAsync(User.GetUserIdExtensios(), pageParams, true);
             if (eventos == null) return NoContent();
 
+            Response.AddPagination(eventos.CurrentPage, eventos.PageSize, eventos.TotalCount, eventos.TotalPages);
+
             return Ok(eventos);
         }
         catch (Exception ex)
