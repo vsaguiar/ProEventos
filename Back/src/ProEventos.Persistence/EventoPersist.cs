@@ -28,7 +28,8 @@ public class EventoPersist : IEventoPersist
         }
 
         query = query.AsNoTracking()
-                    .Where(e => e.Tema.ToLower().Contains(pageParams.Term.ToLower()) && 
+                    .Where(e => (e.Tema.ToLower().Contains(pageParams.Term.ToLower()) ||
+                                e.Local.ToLower().Contains(pageParams.Term.ToLower())) && 
                                 e.UserId == userId)
                      .OrderBy(e => e.Id);
 
