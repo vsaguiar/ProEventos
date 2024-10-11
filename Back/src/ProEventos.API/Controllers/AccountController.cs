@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.API.Extensions;
+using ProEventos.API.Helpers;
 using ProEventos.Application.Contratos;
 using ProEventos.Application.DTOs;
 
@@ -13,11 +14,14 @@ public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
     private readonly ITokenService _tokenService;
+    private readonly IUtil _util;
+    private readonly string destino = "Perfil";
 
-    public AccountController(IAccountService accountService, ITokenService tokenService)
+    public AccountController(IAccountService accountService, ITokenService tokenService, IUtil util)
     {
         _accountService = accountService;
         _tokenService = tokenService;
+        _util = util;
     }
 
 
@@ -121,4 +125,28 @@ public class AccountController : ControllerBase
         }
     }
 
+
+    [HttpPost("upload-image")]
+    public async Task<IActionResult> UploadImage()
+    {
+        try
+        {
+            var user = await _accountService.GetUserByUserNameAsync(User.GetUserNameExtensios());
+            if (user is null) return NoContent();
+
+            var file = Request.Form.Files[0];
+            if (file.Length > 0)
+            {
+                _util.DeleteImage(user.ImagemURL, destino);
+                user.ImagemURL = await _util.SaveImage(file, destino);
+            }
+            var userRetorno = await _accountService.UpdateAccountAsync(user);
+
+            return Ok(userRetorno);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar realizar upload de foto do usuário. Erro: {ex.Message}");
+        }
+    }
 }
