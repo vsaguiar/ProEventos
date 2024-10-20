@@ -1,0 +1,12 @@
+::ng-deep tabset .nav-tabs .nav-item .nav-link {
+    background-color: #2e2b2ba1;  // Cor de fundo padrão para o tab
+    color: #ffffff;  // Cor de texto padrão para o tab
+    //border: none;  // Remove bordas, se necessário
+    //margin-right: 1px;  // Espaçamento entre as tabs
+  }
+  
+  ::ng-deep tabset .nav-tabs .nav-item .nav-link.active {
+    background-color: #ffffff;  // Cor de fundo quando o tab está ativo
+    color: #2e2b2bf5;  // Cor de texto quando o tab está ativo
+  }
+  
