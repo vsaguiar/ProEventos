@@ -1,11 +1,5 @@
-import { AccountService } from './../../../services/account.service';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ValidatorField } from '@app/helpers/ValidatorField';
 import { UserUpdate } from '@app/models/Identity/UserUpdate';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-perfil',
@@ -14,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PerfilComponent implements OnInit {
   
-  userUpdate = {} as UserUpdate;
+  public usuario = {} as UserUpdate;
 
   constructor(
     
@@ -22,6 +16,10 @@ export class PerfilComponent implements OnInit {
 
   get f(): any {
     return '';
+  }
+
+  public setFormValue(usuario: UserUpdate): void {
+    this.usuario = usuario;
   }
 
   ngOnInit(): void {
