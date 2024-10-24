@@ -30,8 +30,11 @@ public class Util : IUtil
 
     public void DeleteImage(string imageName, string destino)
     {
-        var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, @$"Resources/{destino}", imageName);
-        if (System.IO.File.Exists(imagePath))
-            System.IO.File.Delete(imagePath);
+        if (!string.IsNullOrEmpty(imageName))
+        {
+            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, @$"Resources/{destino}", imageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+        }
     }
 }
