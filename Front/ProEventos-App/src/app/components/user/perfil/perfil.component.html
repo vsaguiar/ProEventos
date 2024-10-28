@@ -1,4 +1,4 @@
-<app-titulo [titulo]="'Perfil'" [iconClass]="'fa-solid fa-address-card'"></app-titulo>
+<app-titulo [titulo]="'Perfil' + (ehPalestrante ? ' Palestrante' : '')" [iconClass]="'fa-solid fa-address-card'"></app-titulo>
 
 <div class="card rounded shadow-sm mb-3">
     <div class="row p-3">
@@ -9,8 +9,7 @@
                 </div>
                 <div class="d-flex align-self-center pt-3">
                     <img [src]="imagemURL" (click)="file.click()" name="aboutme" width="120" height="120"
-                        class="rounded-circle"
-                        style="cursor: pointer;">
+                        class="rounded-circle" style="cursor: pointer;">
                 </div>
                 <div class="card-body">
                     <div class="h4 text-center mb-3">{{'@' + usuario.userName}}</div>
@@ -29,7 +28,7 @@
                             </div>
                             <div class="col-6 text-center">
                                 <div class="h5">0</div>
-                                <div class="h6 text-muted">Eventos como Participantes</div>
+                                <div class="h6 text-muted">Eventos como {{ehPalestrante ? ' Palestrante' : ' Participante'}}</div>
                             </div>
                         </div>
                     </li>
@@ -50,13 +49,18 @@
                     <ng-template tabHeading>
                         <i class="fa fa-user me-2"></i><span>Palestrante</span>
                     </ng-template>
+                    <div class="form-group mb-3">
+                        <h3 class="border-bottom">Palestrante</h3>
+                    </div>
                     <app-palestrante-detalhe></app-palestrante-detalhe>
                 </tab>
                 <tab *ngIf="ehPalestrante" class="border border-top-0 p-2">
                     <ng-template tabHeading>
                         <i class="fa fa-share-square me-2"></i><span>Rede Social</span>
                     </ng-template>
-                    Componente Rede Social
+                    <div class="form-group mb-3">
+                        <h3 class="border-bottom">Rede Social</h3>
+                    </div>
                 </tab>
             </tabset>
         </div>

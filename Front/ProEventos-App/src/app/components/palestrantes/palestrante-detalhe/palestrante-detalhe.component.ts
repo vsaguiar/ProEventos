@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Palestrante } from '@app/models/Palestrante';
 import { PalestranteService } from '@app/services/palestrante.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -26,9 +27,10 @@ export class PalestranteDetalheComponent implements OnInit {
   ngOnInit() {
     this.validation();
     this.verificaForm();
+    this.carregarPalestrante();
   }
 
-  private validation(): void{
+  private validation(): void {
     this.form = this.fb.group({
       miniCurriculo: ['']
     })
@@ -38,29 +40,49 @@ export class PalestranteDetalheComponent implements OnInit {
     return this.form.controls;
   }
 
+  private carregarPalestrante(): void {
+    this.spinner.show();
+
+    this.palestranteService
+      .getPalestrante()
+      .subscribe(
+        (palestrante: Palestrante) => {
+          this.form.patchValue(palestrante);
+        },
+        (error: any) => {
+          this.toastr.error('Erro ao carregar o palestrante', 'Erro')
+        }
+      )
+  }
+
   private verificaForm(): void {
     this.form.valueChanges
-        .pipe(
-          map(() => {
-            this.situacaoDoForm = 'Mini-currículo está sendo Atualizado!';
-            this.corDaDescricao = 'text-warning';
-          }),
-          debounceTime(1000),
-          tap(() => this.spinner.show())
-        ).subscribe(
-          () => {
-            this.palestranteService
-                .put({... this.form.value})
-                .subscribe(
-                  () => {
-                    this.situacaoDoForm = 'Mini-currículo foi atualizado!';
-                    this.corDaDescricao = 'text-success';
-                  },
-                  () => {
-                    this.toastr.error('Erro ao tentar atualizar palestrante', 'Erro');
-                  }
-                ).add(() => this.spinner.hide())
-          });
+      .pipe(
+        map(() => {
+          this.situacaoDoForm = 'Mini-currículo está sendo Atualizado!';
+          this.corDaDescricao = 'text-warning';
+        }),
+        debounceTime(1000),
+        tap(() => this.spinner.show())
+      ).subscribe(
+        () => {
+          this.palestranteService
+            .put({ ... this.form.value })
+            .subscribe(
+              () => {
+                this.situacaoDoForm = 'Mini-currículo foi atualizado!';
+                this.corDaDescricao = 'text-success';
+
+                setTimeout(() => {
+                  this.situacaoDoForm = 'Mini-currículo foi carregado!';
+                  this.corDaDescricao = 'text-muted';
+                }, 2000);
+              },
+              () => {
+                this.toastr.error('Erro ao tentar atualizar palestrante', 'Erro');
+              }
+            ).add(() => this.spinner.hide())
+        });
   }
 
 }
