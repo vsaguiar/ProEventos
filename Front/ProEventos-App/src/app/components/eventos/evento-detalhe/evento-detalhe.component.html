@@ -7,8 +7,7 @@
                         <div class="col-md-12">
                             <label>Tema</label>
                             <input type="text" class="form-control" [ngClass]="cssValidator(f.tema)"
-                                formControlName="tema" placeholder="Insira o Tema"
-                                [(ngModel)]="evento.tema">
+                                formControlName="tema" placeholder="Insira o Tema" [(ngModel)]="evento.tema">
                             <div *ngIf="f.tema.errors?.required" class="invalid-feedback">
                                 Tema é obrigatório.
                             </div>
@@ -24,8 +23,7 @@
                         <div class="col-md-8">
                             <label>Local</label>
                             <input type="text" class="form-control" [ngClass]="cssValidator(f.local)"
-                                formControlName="local" placeholder=""
-                                [(ngModel)]="evento.local">
+                                formControlName="local" placeholder="" [(ngModel)]="evento.local">
                             <div *ngIf="f.local.errors?.required && f.local.touched" class="invalid-feedback">
                                 Local é obrigatório.
                             </div>
@@ -34,8 +32,7 @@
                             <label>Data e Hora</label>
                             <input type="datetime" class="form-control" [ngClass]="cssValidator(f.dataEvento)"
                                 value="{{evento.dataEvento | DateFormartPipe}}" bsDatepicker [bsConfig]="bsConfig()"
-                                formControlName="dataEvento" placeholder=""
-                                [(ngModel)]="evento.dataEvento">
+                                formControlName="dataEvento" placeholder="" [(ngModel)]="evento.dataEvento">
                             <div *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="invalid-feedback">
                                 Data e Hora são obrigatórias.
                             </div>
@@ -59,8 +56,7 @@
                         <div class="col-md-4">
                             <label>Telefone</label>
                             <input type="text" class="form-control" [ngClass]="cssValidator(f.telefone)"
-                                formControlName="telefone" placeholder="(000) 90000-0000"
-                                [(ngModel)]="evento.telefone">
+                                formControlName="telefone" placeholder="(000) 90000-0000" [(ngModel)]="evento.telefone">
                             <div *ngIf="f.telefone.errors?.required && f.telefone.touched" class="invalid-feedback">
                                 Telefone é obrigatório.
                             </div>
@@ -68,8 +64,7 @@
                         <div class="col-md-6">
                             <label>E-mail</label>
                             <input type="text" class="form-control" [ngClass]="cssValidator(f.email)"
-                                formControlName="email" placeholder="e-mail"
-                                [(ngModel)]="evento.email">
+                                formControlName="email" placeholder="e-mail" [(ngModel)]="evento.email">
                             <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
                                 E-mail é obrigatório.
                             </div>
@@ -170,6 +165,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="card rounded shadow-sm mt-3 mb-4" *ngIf="modoEditar">
+            <div class="p-3">
+                <div class="d-flex border-bottom">
+                    <h2 class="me-auto">
+                        Redes Sociais do Evento
+                    </h2>
+                    <h2>
+                        <i class="fas fa-share-square"></i>
+                    </h2>
+                </div>
+                <app-redesSociais [eventoId]="eventoId"></app-redesSociais>
+            </div>
+        </div>
     </div>
 
     <div class="col-md-4" *ngIf="modoEditar">
@@ -213,7 +222,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 <ng-template #template>

@@ -24,6 +24,7 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { PalestranteListaComponent } from './components/palestrantes/palestrante-lista/palestrante-lista.component';
 import { PalestranteDetalheComponent } from './components/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
+import { RedesSociaisComponent } from './components/redesSociais/redesSociais.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
@@ -53,6 +54,7 @@ defineLocale('pt-br', ptBrLocale);
     PalestrantesComponent,
     PalestranteListaComponent,
     PalestranteDetalheComponent,
+    RedesSociaisComponent,
     ContatosComponent,
     DashboardComponent,
     PerfilComponent,
